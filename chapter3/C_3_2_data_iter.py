@@ -5,14 +5,16 @@ import mxnet as mx
 from mxnet import nd
 from time import sleep
 
+true_w = [2.5, -3.5]
+true_b = 0.5
+
+
 def data_faker(display = False):
     num_input = 2
     num_feature = 1000
-    w = [2.5, -3.5]
-    b = 0.5
 
     input_features = nd.random.normal(scale=1, shape=[num_feature, num_input])
-    labels = w[0] * input_features[:,0] + w[1] * input_features[:,1] + b
+    labels = true_w[0] * input_features[:,0] + true_w[1] * input_features[:,1] + true_b
 
     labels += nd.random.normal(scale=0.001, shape=labels.shape)
 
