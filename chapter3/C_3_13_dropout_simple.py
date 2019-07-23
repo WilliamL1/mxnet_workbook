@@ -50,13 +50,14 @@ params = [W1, b1, W2, b2, W3, b3]
 def net(X):
     net = nn.Sequential()
     net = net.add(
-        nn.Dense(256, activation = 'relu'),
+        nn.Dense(256, activation='relu'),
         nn.Dropout(0.2),
-        nn.Dense(256, activation = 'relu'),
+        nn.Dense(256, activation='relu'),
         nn.Dropout(0.2),
         nn.Dense(10))
     net.initialize(init.Normal(sigma=0.01))
     return net
+
 
 def train():
     num_epochs, lr, batch_size = 5, 0.5, 256
@@ -65,6 +66,7 @@ def train():
     trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
     d2l.train_ch3(net, train_iter, test_iter, loss, num_epochs, batch_size,
                   params, lr)
+
 
 def dropout_test():
     X = nd.arange(16).reshape((2, 8))
