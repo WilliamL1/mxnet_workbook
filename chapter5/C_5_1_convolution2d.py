@@ -148,6 +148,6 @@ def test_514():
 
 
 if __name__ == '__main__':
-    # test_512()
+    test_512()
     # test_513()
-    test_514()
+    # test_514()
