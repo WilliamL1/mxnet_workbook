@@ -7,13 +7,17 @@ import mxnet as mx
 import time
 
 # 5.5.1
-
 net = nn.Sequential()
 net.add(
+    # layer 1
     nn.Conv2D(channels=6, kernel_size=5, strides=1, padding=0, activation='sigmoid'),
     nn.MaxPool2D(pool_size=2, strides=2),
+
+    # layer 2
     nn.Conv2D(16, (5, 5), strides=1, padding=0, activation='sigmoid'),
     nn.MaxPool2D(pool_size=2, strides=2),
+
+    # layer 3、4、5
     nn.Dense(120, activation='sigmoid'),
     nn.Dense(84, activation='sigmoid'),
     nn.Dense(10)
@@ -96,12 +100,12 @@ def train_ch5(net, train_iter, test_iter, batch_size, trainer, ctx, num_epochs):
             n += y.size
         test_acc = evaluate_accuracy(test_iter, net, ctx)
         print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f, time %.1f sec'
-              % (epoch + 1, train_l_sum /n, train_acc_sum /n, test_acc, time.time() - start))
+              % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc, time.time() - start))
 
 
 lr, num_epochs = 0.9, 5
 net.initialize(force_reinit=True, ctx=ctx, init=init.Xavier())
-trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate' :lr})
+trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 train_ch5(net, train_iter, test_iter, batch_size, trainer, ctx, num_epochs)
 
 """
