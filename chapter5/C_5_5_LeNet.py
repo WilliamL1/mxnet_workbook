@@ -72,6 +72,18 @@ def evaluate_accuracy(data_iter, net, ctx):
 
 
 def train_ch5(net, train_iter, test_iter, batch_size, trainer, ctx, num_epochs):
+    """
+
+    :param net: 网络
+    :param train_iter: 训练集
+    :param test_iter: 测试集
+    :param batch_size: 块大小
+    :param trainer: 训练器
+    :param ctx: 内容
+    :param num_epochs: 迭代次数
+    :return:
+    """
+
     print('training on', ctx)
     # 定义损失函数
     loss = gloss.SoftmaxCrossEntropyLoss()
