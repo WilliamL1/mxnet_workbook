@@ -2,6 +2,7 @@ from mxnet.gluon import nn, Trainer
 from mxnet import nd
 from d2lzh import d2l
 
+
 def evaluate_accuracy(data_iter, net, ctx):
     acc_sum, n = nd.array([0], ctx=ctx), 0
     for X, y in data_iter:
@@ -63,10 +64,11 @@ train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size, resize=224)
 trainer = Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
 from mxnet.gluon import loss as gloss
 from mxnet import autograd
+
 loss = gloss.SoftmaxCrossEntropyLoss()
 
 for _ in range(num_epochs):
-    train_l_sum, train_acc_sum, n  = 0.0, 0.0, 0
+    train_l_sum, train_acc_sum, n = 0.0, 0.0, 0
     for X, y in train_iter:
         with autograd.record():
             y_hat = net(X)
@@ -81,3 +83,12 @@ for _ in range(num_epochs):
     print('epoch %d, loss %.4f, train acc %.3f, test acc %.3f, time %.1f sec'
           % (epoch + 1, train_l_sum / n, train_acc_sum / n, test_acc, time.time() - start))
 
+
+def nin_block(num_channel, strides, kernel_size, padding):
+    blk = nn.Sequential()
+    blk.add(
+        nn.Conv2D(channels=num_channel, kernel_size=kernel_size, strides=strides, padding=padding, activation='relu'),
+        nn.Conv2D(channels=num_channel, kernel_size=1, strides=1, padding=0, activation='relu'),
+        nn.Conv2D(channels=num_channel, kernel_size=1, strides=1, padding=0, activation='relu')
+    )
+    return blk
