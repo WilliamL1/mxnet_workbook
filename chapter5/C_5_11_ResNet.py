@@ -100,9 +100,9 @@ def train_resnet_18():
     net = residual_network()
     net.initialize(force_reinit=True, init=init.Xavier())
 
-    lr, batch_size, ctx, epoch_num = 1.0, 256, mxnet.cpu(), 5
+    lr, batch_size, ctx, epoch_num = 0.05, 256, mxnet.cpu(), 5
     trainer = gluon.Trainer(net.collect_params(), 'sgd', {'learning_rate': lr})
-    train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size)
+    train_iter, test_iter = d2l.load_data_fashion_mnist(batch_size=batch_size, resize=96)
     d2l.train_ch5(net, train_iter, test_iter, batch_size, trainer, ctx, epoch_num)
 
 
